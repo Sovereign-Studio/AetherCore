@@ -4,15 +4,15 @@ import java.net.URLClassLoader;
 
 public class LoadedModule {
 
-    private final RPGModule module;
+    private final Module module;
     private final URLClassLoader classLoader;
 
-    public LoadedModule(RPGModule module, URLClassLoader classLoader) {
+    public LoadedModule(Module module, URLClassLoader classLoader) {
         this.module = module;
         this.classLoader = classLoader;
     }
 
-    public RPGModule getModule() {
+    public Module getModule() {
         return module;
     }
 

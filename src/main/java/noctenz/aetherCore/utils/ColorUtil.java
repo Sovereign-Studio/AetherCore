@@ -1,4 +1,4 @@
-package noctenz.aetherCore.util;
+package noctenz.aetherCore.utils;
 
 import net.md_5.bungee.api.ChatColor;
 

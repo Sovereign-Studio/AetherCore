@@ -1,4 +1,4 @@
-package noctenz.aetherCore.command;
+package noctenz.aetherCore.commands;
 
 import noctenz.aetherCore.AetherCore;
 import org.bukkit.command.Command;
@@ -23,7 +23,13 @@ public class AetherTabComplete implements TabCompleter {
         if (args.length == 1) {
             list.add("reload");
             list.add("check");
+            list.add("actionbar");
             list.add("anvilrename");
+        }
+
+        if (args.length == 2 && args[0].equalsIgnoreCase("actionbar")) {
+            list.add("on");
+            list.add("off");
         }
 
         if (args.length == 2 && args[0].equalsIgnoreCase("anvilrename")) {

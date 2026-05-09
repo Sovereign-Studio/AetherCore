@@ -1,6 +1,6 @@
 package noctenz.aetherCore.anvil;
 
-import noctenz.aetherCore.util.ColorUtil;
+import noctenz.aetherCore.utils.ColorUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;

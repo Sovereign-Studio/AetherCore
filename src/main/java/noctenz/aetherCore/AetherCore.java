@@ -2,9 +2,11 @@ package noctenz.aetherCore;
 
 import noctenz.aetherCore.anvil.AnvilRenameListener;
 import noctenz.aetherCore.anvil.AnvilRenameManager;
-import noctenz.aetherCore.command.AetherCommand;
-import noctenz.aetherCore.command.AetherTabComplete;
-import noctenz.aetherCore.util.DummyHandler;
+import noctenz.aetherCore.commands.AetherCommand;
+import noctenz.aetherCore.commands.AetherTabComplete;
+import noctenz.aetherCore.listeners.HealthScaleListener;
+import noctenz.aetherCore.utils.ActionBar;
+import noctenz.aetherCore.utils.DummyHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,6 +16,9 @@ import java.util.List;
 
 public class AetherCore extends JavaPlugin {
 
+    private static AetherCore instance;
+    private ActionBar actionBar;
+
     private ModuleLoader moduleLoader;
     private AnvilRenameManager anvilRenameManager;
 
@@ -22,6 +27,12 @@ public class AetherCore extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Starting AetherCore...");
+
+        /* ActionBar System */
+        instance = this;
+        this.actionBar = new ActionBar(this);
+        this.getServer().getPluginManager().registerEvents(this.actionBar, this);
+        this.getServer().getPluginManager().registerEvents(new HealthScaleListener(), this);
 
         /* Dummy System */
         DummyHandler dummyHandler = new DummyHandler(this);
@@ -65,6 +76,13 @@ public class AetherCore extends JavaPlugin {
             }
         }
         entityList.clear();
+    }
+    public static AetherCore getInstance() {
+        return instance;
+    }
+
+    public ActionBar getActionBar() {
+        return this.actionBar;
     }
     public ModuleLoader getModuleLoader() {
         return moduleLoader;

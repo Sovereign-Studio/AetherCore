@@ -7,9 +7,10 @@ description: © Copyright Sovereign Studios 2025 – 2026 all right reserved.
 depen: [MythicLib]
 
 commands:
-  ac:
+  aethercore:
     description: AetherCore main command
-    usage: /ac
+    aliases: [ac, acor]
+    usage: /aethercore
     permission: aethercore.admin
   spawndummy:
     description: Spawn damage dummy

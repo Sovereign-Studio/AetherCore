@@ -1,6 +1,6 @@
 package noctenz.aetherCore;
 
-public interface RPGModule {
+public interface Module {
 
     void onEnable(AetherCore core);
 

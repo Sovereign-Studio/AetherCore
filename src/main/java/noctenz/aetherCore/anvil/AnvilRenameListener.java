@@ -1,5 +1,7 @@
 package noctenz.aetherCore.anvil;
 
+import noctenz.aetherCore.utils.ColorUtil;
+import noctenz.aetherCore.utils.MessagesPrefix;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -28,7 +30,7 @@ public class AnvilRenameListener implements Listener {
         if (manager.isBlacklisted(name)) {
             event.setResult(null);
             Player player = (Player) event.getView().getPlayer();
-            player.sendMessage(ChatColor.RED + "Rename Blacklist for this name");
+            player.sendMessage(ColorUtil.color(MessagesPrefix.PREFIX + "§cRename Blacklist for this name"));
             player.playSound(
                     player.getLocation(),
                     Sound.ENTITY_VILLAGER_NO,

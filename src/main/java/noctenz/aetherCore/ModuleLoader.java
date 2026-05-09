@@ -10,23 +10,20 @@ import java.util.ServiceLoader;
 public class ModuleLoader {
 
     private final AetherCore plugin;
-
     private final List<LoadedModule> loadedModules = new ArrayList<>();
 
     public ModuleLoader(AetherCore plugin) {
         this.plugin = plugin;
     }
-
     public List<LoadedModule> getLoadedModules() {
         return loadedModules;
     }
 
     public void loadModules() {
-        File folder = new File(plugin.getDataFolder(), "RPG");
+        File folder = new File(plugin.getDataFolder(), "Module");
 
         if (!folder.exists())
             folder.mkdirs();
-
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".jar"));
 
         if (files == null) {
@@ -40,10 +37,10 @@ public class ModuleLoader {
                         new URL[]{file.toURI().toURL()},
                         plugin.getClass().getClassLoader()
                 );
-                ServiceLoader<RPGModule> serviceLoader =
-                        ServiceLoader.load(RPGModule.class, loader);
+                ServiceLoader<Module> serviceLoader =
+                        ServiceLoader.load(Module.class, loader);
                 int count = 0;
-                for (RPGModule module : serviceLoader) {
+                for (Module module : serviceLoader) {
 
                     plugin.getLogger().info("Found module class: " + module.getClass().getName());
 
@@ -54,7 +51,7 @@ public class ModuleLoader {
                     count++;
                 }
                 if (count == 0) {
-                    plugin.getLogger().warning("No RPGModule found in " + file.getName());
+                    plugin.getLogger().warning("No Module found in " + file.getName());
                     loader.close();
                 }
 

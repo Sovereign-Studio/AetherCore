@@ -1,4 +1,4 @@
-package noctenz.aetherCore.util;
+package noctenz.aetherCore.utils;
 
 import io.lumine.mythic.lib.api.event.PlayerAttackEvent;
 import noctenz.aetherCore.AetherCore;
@@ -39,7 +39,7 @@ public class DummyHandler implements Listener, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("Only players can use this command.");
+            sender.sendMessage(ColorUtil.color(MessagesPrefix.PREFIX + "§cOnly players can use this command."));
             return true;
         }
         if (args.length == 0) {
@@ -52,7 +52,7 @@ public class DummyHandler implements Listener, CommandExecutor {
         try {
             type = DummyType.valueOf(args[0].toUpperCase());
         } catch (IllegalArgumentException ex) {
-            player.sendMessage("§cInvalid dummy type.");
+            player.sendMessage(ColorUtil.color(MessagesPrefix.PREFIX + "§cInvalid dummy type."));
             return true;
         }
         spawnDummy(player, type);
@@ -162,9 +162,9 @@ public class DummyHandler implements Listener, CommandExecutor {
                     (Monster) loc.getWorld().spawn(loc, type.entityClass);
             setupDummy(newDummy);
             plugin.entityList.add(newDummy);
-            player.sendMessage("§aSuccessfully set Dummy type to " + type.displayName);
+            player.sendMessage(ColorUtil.color(MessagesPrefix.PREFIX + "§aSuccessfully set Dummy type to " + type.displayName));
         } else {
-            player.sendMessage("§cDummy removed.");
+            player.sendMessage(ColorUtil.color(MessagesPrefix.PREFIX + "§cDummy removed."));
         }
         player.closeInventory();
         Bukkit.getScheduler().runTaskLater(plugin,
@@ -194,7 +194,7 @@ public class DummyHandler implements Listener, CommandExecutor {
 
     private void spawnDummy(Player player, DummyType type) {
         if (cooldown.contains(player.getUniqueId())) {
-            player.sendMessage("§cYou are currently on cooldown.");
+            player.sendMessage(ColorUtil.color(MessagesPrefix.PREFIX + "§cYou are currently on cooldown."));
             return;
         }
 
@@ -204,7 +204,7 @@ public class DummyHandler implements Listener, CommandExecutor {
 
         setupDummy(dummy);
         plugin.entityList.add(dummy);
-        player.sendMessage("§aDummy spawned: " + type.displayName);
+        player.sendMessage(ColorUtil.color(MessagesPrefix.PREFIX + "§aDummy spawned: " + type.displayName));
 
         cooldown.add(player.getUniqueId());
         Bukkit.getScheduler().runTaskLater(plugin,
