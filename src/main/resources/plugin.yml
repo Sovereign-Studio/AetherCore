@@ -1,0 +1,22 @@
+name: AetherCore
+version: '1.0'
+main: noctenz.aetherCore.AetherCore
+api-version: '1.21'
+authors: [Noctenz]
+description: © Copyright Sovereign Studios 2025 – 2026 all right reserved.
+depen: [MythicLib]
+
+commands:
+  ac:
+    description: AetherCore main command
+    usage: /ac
+    permission: aethercore.admin
+  spawndummy:
+    description: Spawn damage dummy
+    usage: /spawndummy <type>
+    permission: aethercore.admin
+
+permissions:
+  aethercore.admin:
+    description: Allows access to AetherCore commands
+    default: op
