@@ -46,20 +46,26 @@ public class ModuleLoader {
                 for (Module module : serviceLoader) {
                     plugin.getLogger().info("Found module class: " + module.getClass().getName());
 
-                    String folderName = module.getClass().getSimpleName()
-                            .replace("Module", "");
-                    File moduleConfigFolder = new File(plugin.getDataFolder(), "ConfigModule/" + folderName);
-                    if (!moduleConfigFolder.exists()) moduleConfigFolder.mkdirs();
+                    boolean hasConfig = false;
+                    try {
+                        hasConfig = module.getClass().getMethod("initConfig", File.class)
+                                .getDeclaringClass() != Module.class;
+                    } catch (NoSuchMethodException ignored) {}
 
-                    module.initConfig(moduleConfigFolder);
+                    if (hasConfig) {
+                        String folderName = module.getClass().getSimpleName()
+                                .replace("Module", "");
+                        File moduleConfigFolder = new File(plugin.getDataFolder(), "Config/" + folderName);
+                        if (!moduleConfigFolder.exists()) moduleConfigFolder.mkdirs();
+                        module.initConfig(moduleConfigFolder);
+                    }
 
                     module.onEnable(plugin);
                     loadedModules.add(new LoadedModule(module, loader));
 
                     try {
                         plugin.getAnvilRenameManager().registerFromModule(module);
-                    } catch (AbstractMethodError e) {
-                    }
+                    } catch (AbstractMethodError ignored) {}
 
                     try {
                         plugin.getLogger().info("Module enabled: " + module.getNames());

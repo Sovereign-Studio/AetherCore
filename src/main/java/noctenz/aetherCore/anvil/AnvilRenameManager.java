@@ -4,8 +4,11 @@ import noctenz.aetherCore.utils.ColorUtil;
 import noctenz.aetherCore.Module;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,27 +18,44 @@ public class AnvilRenameManager {
     private final JavaPlugin plugin;
     private final Set<String> blacklist = new HashSet<>();
 
+    private File anvilFile;
+    private FileConfiguration anvilConfig;
+
     public AnvilRenameManager(JavaPlugin plugin) {
         this.plugin = plugin;
+        setupFile();
         load();
     }
 
+    private void setupFile() {
+        anvilFile = new File(plugin.getDataFolder(), "anvil.yml");
+        if (!anvilFile.exists()) {
+            try {
+                plugin.getDataFolder().mkdirs();
+                anvilFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        anvilConfig = YamlConfiguration.loadConfiguration(anvilFile);
+    }
+
     public void load() {
-        plugin.saveDefaultConfig();
-        FileConfiguration config = plugin.getConfig();
-
+        anvilConfig = YamlConfiguration.loadConfiguration(anvilFile);
         blacklist.clear();
-
-        List<String> list = config.getStringList("anvilRenameBlacklist");
-
+        List<String> list = anvilConfig.getStringList("anvilRenameBlacklist");
         for (String s : list) {
             blacklist.add(ColorUtil.color(s));
         }
     }
 
     public void save() {
-        plugin.getConfig().set("anvilRenameBlacklist", blacklist.stream().toList());
-        plugin.saveConfig();
+        anvilConfig.set("anvilRenameBlacklist", blacklist.stream().toList());
+        try {
+            anvilConfig.save(anvilFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isBlacklisted(String name) {
@@ -68,6 +88,7 @@ public class AnvilRenameManager {
                         .equalsIgnoreCase(ChatColor.stripColor(name)));
         save();
     }
+
     public Set<String> getBlacklist() {
         return blacklist;
     }
