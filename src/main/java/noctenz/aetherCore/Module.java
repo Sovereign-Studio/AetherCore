@@ -1,11 +1,10 @@
 package noctenz.aetherCore;
 
+import java.util.List;
+
 public interface Module {
-
-    void onEnable(AetherCore core);
-
-    void onDisable();
-
     String getName();
-
+    List<String> getNames();
+    void onEnable(AetherCore plugin);
+    void onDisable();
 }
