@@ -46,12 +46,27 @@ public class ModuleLoader {
                 for (Module module : serviceLoader) {
                     plugin.getLogger().info("Found module class: " + module.getClass().getName());
 
+                    String folderName = module.getClass().getSimpleName()
+                            .replace("Module", "");
+                    File moduleConfigFolder = new File(plugin.getDataFolder(), "ConfigModule/" + folderName);
+                    if (!moduleConfigFolder.exists()) moduleConfigFolder.mkdirs();
+
+                    module.initConfig(moduleConfigFolder);
+
                     module.onEnable(plugin);
                     loadedModules.add(new LoadedModule(module, loader));
 
-                    plugin.getAnvilRenameManager().registerFromModule(module);
+                    try {
+                        plugin.getAnvilRenameManager().registerFromModule(module);
+                    } catch (AbstractMethodError e) {
+                    }
 
-                    plugin.getLogger().info("Module enabled: " + module.getNames());
+                    try {
+                        plugin.getLogger().info("Module enabled: " + module.getNames());
+                    } catch (AbstractMethodError e) {
+                        plugin.getLogger().info("Module enabled: " + module.getClass().getSimpleName());
+                    }
+
                     count++;
                 }
 
