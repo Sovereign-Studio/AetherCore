@@ -5,6 +5,7 @@ import noctenz.aetherCore.anvil.AnvilRenameManager;
 import noctenz.aetherCore.commands.AetherCommand;
 import noctenz.aetherCore.commands.AetherTabComplete;
 import noctenz.aetherCore.listeners.HealthScaleListener;
+import noctenz.aetherCore.listeners.LevelListener;
 import noctenz.aetherCore.utils.ActionBar;
 import noctenz.aetherCore.utils.DummyHandler;
 import org.bukkit.entity.Entity;
@@ -33,6 +34,8 @@ public class AetherCore extends JavaPlugin {
         this.actionBar = new ActionBar(this);
         this.getServer().getPluginManager().registerEvents(this.actionBar, this);
         this.getServer().getPluginManager().registerEvents(new HealthScaleListener(), this);
+
+        this.getServer().getPluginManager().registerEvents(new LevelListener(), this);
 
         /* Dummy System */
         DummyHandler dummyHandler = new DummyHandler(this);
