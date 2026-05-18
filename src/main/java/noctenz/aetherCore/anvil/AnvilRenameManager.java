@@ -59,21 +59,13 @@ public class AnvilRenameManager {
     }
 
     public boolean isBlacklisted(String name) {
-        String strippedInput = stripAll(name);
-        for (String entry : blacklist) {
-            String strippedEntry = stripAll(entry);
-            if (strippedInput.equalsIgnoreCase(strippedEntry)) return true;
-            if (strippedInput.toLowerCase().startsWith(strippedEntry.toLowerCase())) return true;
+        for (String s : blacklist) {
+            if (ChatColor.stripColor(name)
+                    .equalsIgnoreCase(ChatColor.stripColor(s))) {
+                return true;
+            }
         }
         return false;
-    }
-
-    private String stripAll(String text) {
-        if (text == null) return "";
-        String s = ChatColor.stripColor(text);
-        s = s.replaceAll("[§&][0-9a-fk-orA-FK-OR]", "");
-        s = s.replaceAll("\\[.*?]", "").trim();
-        return s;
     }
 
     public void registerFromModule(Module module) {
