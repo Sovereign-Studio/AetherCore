@@ -46,11 +46,10 @@ public class AetherCore extends JavaPlugin {
         moduleLoader = new ModuleLoader(this);
         moduleLoader.loadModules();
 
-        if (getCommand("ac") != null) {
-            getCommand("ac").setExecutor(new AetherCommand(this));
-            getCommand("ac").setTabCompleter(new AetherTabComplete(this));
+        if (getCommand("aec") != null) {
+            getCommand("aec").setExecutor(new AetherCommand(this));
+            getCommand("aec").setTabCompleter(new AetherTabComplete(this));
         }
-
         getLogger().info("AetherCore started successfully.");
     }
 
