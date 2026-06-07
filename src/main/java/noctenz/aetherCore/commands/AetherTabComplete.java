@@ -1,12 +1,15 @@
 package noctenz.aetherCore.commands;
 
 import noctenz.aetherCore.AetherCore;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AetherTabComplete implements TabCompleter {
 
@@ -24,7 +27,7 @@ public class AetherTabComplete implements TabCompleter {
             list.add("reload");
             list.add("check");
             list.add("actionbar");
-            list.add("anvilrename");
+            list.add("updateitem");
         }
 
         if (args.length == 2 && args[0].equalsIgnoreCase("actionbar")) {
@@ -32,19 +35,10 @@ public class AetherTabComplete implements TabCompleter {
             list.add("off");
         }
 
-        if (args.length == 2 && args[0].equalsIgnoreCase("anvilrename")) {
-            list.add("blacklist");
-            list.add("remove");
-            list.add("list");
+        if (args.length == 2 && args[0].equalsIgnoreCase("updateitem")) {
+            list.addAll(Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()));
         }
 
-        if (args.length >= 3
-                && args[0].equalsIgnoreCase("anvilrename")
-                && args[1].equalsIgnoreCase("remove")) {
-            plugin.getAnvilRenameManager()
-                    .getBlacklist()
-                    .forEach(s -> list.add(s));
-        }
         return list;
     }
 }

@@ -63,15 +63,7 @@ public class ModuleLoader {
                     module.onEnable(plugin);
                     loadedModules.add(new LoadedModule(module, loader));
 
-                    try {
-                        plugin.getAnvilRenameManager().registerFromModule(module);
-                    } catch (AbstractMethodError ignored) {}
-
-                    try {
-                        plugin.getLogger().info("Module enabled: " + module.getNames());
-                    } catch (AbstractMethodError e) {
-                        plugin.getLogger().info("Module enabled: " + module.getClass().getSimpleName());
-                    }
+                    plugin.getLogger().info("Module enabled: " + module.getClass().getSimpleName());
 
                     count++;
                 }
