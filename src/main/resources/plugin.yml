@@ -1,5 +1,5 @@
 name: AetherCore
-version: '1.1'
+version: '1.2'
 main: noctenz.aetherCore.AetherCore
 api-version: '1.21'
 authors: [Noctenz]
